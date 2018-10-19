@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8" />
+		<title></title>
+	</head>
+	<body>
+		<input type="text" id="sendText" /> <button id="sendBtn" onclick="Chat.chat()">发送</button><br />
+		<div id="reciveBox">
+			接受到的消息为：
+		</div>
+		<script type="text/javascript">
+			window.Chat = {
+				socket: null,
+				init: function() {
+					if(window.WebSocket) {
+						Chat.socket = new WebSocket("ws://192.168.4.104:8888/webchat");
+						Chat.socket.onopen = function() {
+							console.log("建立连接成功！");
+						}
+						Chat.socket.onmessage = function(e) {
+							console.log("接收到消息：" + e.data);
+							var reciveBox = document.getElementById("reciveBox");
+							var html = reciveBox.innerHTML;
+							reciveBox.innerHTML = html + "<br/>" + e.data;
+						}
+						Chat.socket.onerror = function() {
+							console.log("发生错误");
+						}
+						Chat.socket.onclose = function() {
+							console.log("连接关闭！");
+						}
+					} else {
+						alert("浏览器不支持websocket");
+					}
+				},
+				chat: function() {
+					var msg = document.getElementById("sendText");
+					Chat.socket.send(msg.value);
+				}
+			};
+			
+			Chat.init();
+		</script>
+	</body>
+</html>

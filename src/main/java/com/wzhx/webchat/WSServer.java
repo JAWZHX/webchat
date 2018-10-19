@@ -23,8 +23,8 @@ public class WSServer {
 		try {
 			ServerBootstrap serverBootstrap = new ServerBootstrap();
 			serverBootstrap.group(mainGroup, subGroup).channel(NioServerSocketChannel.class).childHandler(new WSServerInitializer());
-			ChannelFuture channelFuture = serverBootstrap.bind(8080).sync();
-			channelFuture.channel().closeFuture();
+			ChannelFuture channelFuture = serverBootstrap.bind(8888).sync();
+			channelFuture.channel().closeFuture().sync();
 		} finally {
 			mainGroup.shutdownGracefully();
 			subGroup.shutdownGracefully();
