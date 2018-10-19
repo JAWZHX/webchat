@@ -22,7 +22,7 @@ public class WSServer {
 //		2、创建服务器启动类
 		try {
 			ServerBootstrap serverBootstrap = new ServerBootstrap();
-			serverBootstrap.group(mainGroup, subGroup).channel(NioServerSocketChannel.class).childHandler(null);
+			serverBootstrap.group(mainGroup, subGroup).channel(NioServerSocketChannel.class).childHandler(new WSServerInitializer());
 			ChannelFuture channelFuture = serverBootstrap.bind(8080).sync();
 			channelFuture.channel().closeFuture();
 		} finally {

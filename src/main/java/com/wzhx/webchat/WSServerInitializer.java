@@ -7,7 +7,11 @@ import io.netty.handler.codec.http.HttpObjectAggregator;
 import io.netty.handler.codec.http.HttpServerCodec;
 import io.netty.handler.codec.http.websocketx.WebSocketServerProtocolHandler;
 import io.netty.handler.stream.ChunkedWriteHandler;
-
+/**
+ * WSServer的channel的初始化处理器
+ * @author 12192
+ *
+ */
 public class WSServerInitializer extends ChannelInitializer<SocketChannel>{
 
 	@Override
@@ -33,7 +37,7 @@ public class WSServerInitializer extends ChannelInitializer<SocketChannel>{
 		pipeline.addLast(new WebSocketServerProtocolHandler("/webchat"));
 		
 		// 自定义的handler
-		pipeline.addLast(null);
+		pipeline.addLast(new ChatHandler());
 	}
 
 }
